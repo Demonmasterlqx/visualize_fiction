@@ -1,0 +1,33 @@
+# 项目配置文件
+# 使用YAML格式存储全局配置和路径设置
+
+# 基础路径配置
+base_dir: .
+data_dir: data
+output_dir: output
+
+# 文本处理模块配置
+text_processing:
+  chapter_markers: ["第", "章"]  # 章节识别标记
+  max_chapter_length: 10000  # 单章最大长度(字符)
+
+# 肖像生成模块配置
+portrait_generation:
+  default_expressions: ["neutral", "happy", "angry", "sad"]
+  image_format: "png"
+
+# 音频处理模块配置
+audio_processing:
+  default_voice: "female_01"
+  sample_rate: 22050
+
+# 视频合成模块配置
+video_composition:
+  fps: 24
+  resolution: [1920, 1080]
+
+# 需要创建的目录结构
+directories_to_create:
+  - data/portraits
+  - data/audio 
+  - output/videos
