@@ -1,0 +1,95 @@
+# Visualize Fiction 配置文件
+
+# 系统配置
+system:
+  working_dir: "./workspace"
+  temp_dir: "./temp"
+  output_dir: "./output"
+  log_level: "info"
+  max_concurrent_tasks: 4
+  cache_enabled: true
+  cache_size_limit: "5GB"
+
+# 文本预处理模块配置
+text_processing:
+  # 章节解析器配置
+  chapter_parser:
+    # 文件读取配置
+    file_reader:
+      encodings: 
+        - utf-8
+        - gbk
+        - gb2312
+    
+    # 章节识别配置
+    chapter_detector:
+      patterns:
+        - '第\s*[一二三四五六七八九十百千万\d]+\s*[章节回].*?\n'
+        - '序\s*章.*?\n'
+        - '尾\s*声.*?\n'
+        - '后\s*记.*?\n'
+      min_chapter_length: 100  # 最小章节长度（字符数）
+    
+    # 存储配置
+    storage:
+      output_dir: "data/processed/"
+      split_chapters: false  # 是否分章节存储
+
+  # 角色信息提取器配置
+  character_extractor:
+    model: "gpt-4"
+    api_key: "${GPT_API_KEY}"
+    max_tokens: 4000
+    temperature: 0.7
+    character_extraction_prompt: "..."
+    scene_extraction_prompt: "..."
+    retry_count: 3
+    timeout: 30
+
+# 肖像生成模块配置
+portrait_generation:
+  model: "stable-diffusion-xl"
+  api_key: "${SD_API_KEY}"
+  resolution: "1024x1024"
+  steps: 30
+  cfg_scale: 7.0
+  batch_size: 4
+  ip_adapter:
+    enabled: true
+    weight: 0.8
+  controlnet:
+    enabled: false
+    model: "canny"
+    weight: 0.6
+
+# 音频处理模块配置
+audio_processing:
+  tts_engine: "azure"
+  api_key: "${AZURE_TTS_KEY}"
+  default_voice: "zh-CN-XiaoxiaoNeural"
+  format: "mp3"
+  sample_rate: 24000
+  character_voices:
+    "protagonist": "zh-CN-YunxiNeural"
+    "antagonist": "zh-CN-YunjianNeural"
+    "narrator": "zh-CN-YunyangNeural"
+  audio_effects:
+    normalization: true
+    noise_reduction: true
+
+# 视频合成模块配置
+video_synthesis:
+  resolution: "1920x1080"
+  fps: 30
+  codec: "h264"
+  bitrate: "5M"
+  animation:
+    type: "ken_burns"
+    duration: 5.0
+    transition: "fade"
+  subtitles:
+    enabled: true
+    font: "SimHei"
+    size: 24
+    color: "#FFFFFF"
+    outline: true
