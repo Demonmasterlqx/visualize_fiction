@@ -37,14 +37,37 @@ text_processing:
 
   # 角色信息提取器配置
   character_extractor:
-    model: "gpt-4"
-    api_key: "${GPT_API_KEY}"
-    max_tokens: 4000
-    temperature: 0.7
-    character_extraction_prompt: "..."
-    scene_extraction_prompt: "..."
-    retry_count: 3
-    timeout: 30
+    # LLM配置
+    llm:
+      model: "deepseek-chat"
+      api_key_file: "API.config.yaml"
+      max_tokens: 4000
+      temperature: 0.7
+      retry_count: 3
+      timeout: 30
+    
+    # 提取配置
+    extraction:
+      batch_size: 5
+      max_relevant_chapters: 10
+      importance_threshold:
+        main: 0.8
+        supporting: 0.5
+    
+    # 特征标准化配置
+    feature_standardization:
+      enabled: true
+      mode: "all"  # all, main, missing
+    
+    # 输出配置
+    output_dir: "data/characters/"
+    save_results: true
+    
+    # 提示模板配置（可选，默认使用内置模板）
+    prompts:
+      character_extraction: {}
+      feature_extraction: {}
+      feature_standardization: {}
 
 # 肖像生成模块配置
 portrait_generation:

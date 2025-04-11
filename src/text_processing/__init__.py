@@ -5,5 +5,8 @@
 """
 
 from .chapter_parser import ChapterParser
+from .character_extractor import CharacterExtractor
+from .feature_standardizer import FeatureStandardizer
+from .llm_client import LLMClient
 
-__all__ = ['ChapterParser']
+__all__ = ['ChapterParser', 'CharacterExtractor', 'FeatureStandardizer', 'LLMClient']
