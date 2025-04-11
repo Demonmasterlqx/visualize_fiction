@@ -68,6 +68,7 @@ text_processing:
       character_extraction: {}
       feature_extraction: {}
       feature_standardization: {}
+      
 
 # 肖像生成模块配置
 portrait_generation:
@@ -116,3 +117,34 @@ video_synthesis:
     size: 24
     color: "#FFFFFF"
     outline: true
+
+# 角色微调工具配置
+character_tuner:
+  # LLM配置
+  llm:
+    model: "deepseek-chat"
+    api_key_file: "API.config.yaml"
+    max_tokens: 4000
+    temperature: 0.7
+    retry_count: 3
+    timeout: 30
+    json_mode: true
+  
+  # 微调配置
+  tuning:
+    history_size: 10  # 历史记录大小
+    auto_validate: true  # 自动验证特征
+    default_style: "realistic"  # 默认风格
+    
+  # 输出配置
+  output:
+    dir: "data/characters/"  # 输出目录
+    backup: true  # 是否备份原始文件
+    format: "json"  # 输出格式（json/yaml）
+    indent: 2  # 缩进空格数
+    
+  # 提示模板配置（可选，默认使用内置模板）
+  prompts:
+    feature_edit: {}  # 特征编辑提示模板
+    feature_regenerate: {}  # 特征重新生成提示模板
+    batch_edit: {}  # 批量编辑提示模板

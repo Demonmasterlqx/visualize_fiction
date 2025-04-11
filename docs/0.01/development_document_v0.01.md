@@ -157,6 +157,21 @@ visualize_fiction/
 
 **实现文件**: `src/text_processing/character_extractor.py`
 
+**功能概述**:
+
+角色信息提取器负责从小说文本中提取角色信息，包括基本属性、外观特征等。该模块利用大语言模型（LLM）的文本理解能力，通过精心设计的提示工程，实现高质量的角色信息提取和标准化。
+
+**主要功能**:
+- 从小说文本中识别主要和次要角色
+- 提取角色的基本属性（性别、年龄、职业等）
+- 提取角色的外观特征描述
+- 对所有角色的外观特征进行标准化和结构化处理
+- 将角色信息以结构化方式存储
+
+**详细文档**:
+
+角色信息提取器的详细设计、实现和使用说明请参考：[角色信息提取器模块开发文档](character_extractor_document.md)
+
 **主要类和方法**:
 
 ```python
@@ -171,28 +186,123 @@ class CharacterExtractor:
         self.config = config
         self.llm_client = llm_client
         
-    def extract_characters(self, chapters):
+    def extract_from_chapters(self, chapters, book_info=None):
         """从章节中提取角色信息
         
         Args:
             chapters: 章节数据
+            book_info: 书籍信息，可选
             
         Returns:
             dict: 角色信息数据库
         """
         # 实现角色提取逻辑
         
-    def analyze_relationships(self, characters, chapters):
-        """分析角色关系
+    def _extract_basic_characters(self, chapters):
+        """提取基本角色列表
         
         Args:
-            characters: 角色列表
-            chapters: 章节数据
+            chapters: 章节数据列表
             
         Returns:
-            dict: 角色关系图
+            List[Dict]: 基本角色列表
         """
-        # 实现关系分析
+        # 实现基本角色提取
+        
+    def _extract_detailed_features(self, basic_characters, chapters):
+        """提取角色详细特征
+        
+        Args:
+            basic_characters: 基本角色列表
+            chapters: 章节数据列表
+            
+        Returns:
+            List[Dict]: 带详细特征的角色列表
+        """
+        # 实现详细特征提取
+```
+
+#### 角色微调工具 (CharacterTuner)
+
+**实现文件**: `src/text_processing/character_tuner.py`
+
+**功能概述**:
+
+角色微调工具是对角色提取器的补充，允许用户对自动提取的角色形象进行微调和定制。该工具提供命令行界面，支持查看、编辑和重新生成角色特征，以满足用户对角色形象的特定需求。
+
+**主要功能**:
+- 列出和查看已提取的角色信息
+- 编辑角色的特定特征（如脸型、眼睛、肤色等）
+- 基于用户提供的新描述重新生成特征
+- 批量编辑多个角色的特征
+- 验证特征描述的完整性和一致性
+- 导出微调后的角色信息
+
+**详细文档**:
+
+角色微调工具的详细设计、实现和使用说明请参考：[角色微调工具模块开发文档](character_tuner_document.md)
+
+**主要类和方法**:
+
+```python
+class CharacterTuner:
+    def __init__(self, config, llm_client=None):
+        """初始化角色微调工具
+        
+        Args:
+            config: 配置对象
+            llm_client: 大语言模型客户端，可选
+        """
+        self.config = config
+        self.llm_client = llm_client or self._create_llm_client()
+        
+    def load_characters(self, file_path):
+        """加载角色数据
+        
+        Args:
+            file_path: 角色数据文件路径
+            
+        Returns:
+            dict: 角色数据库
+        """
+        # 实现角色数据加载
+        
+    def list_characters(self, filter_criteria=None):
+        """列出角色
+        
+        Args:
+            filter_criteria: 筛选条件，可选
+            
+        Returns:
+            List[Dict]: 符合条件的角色列表
+        """
+        # 实现角色列表功能
+        
+    def edit_feature(self, character_id, feature_name, new_value):
+        """编辑特定特征
+        
+        Args:
+            character_id: 角色ID
+            feature_name: 特征名称
+            new_value: 新的特征值
+            
+        Returns:
+            Dict: 更新后的角色信息
+        """
+        # 实现特征编辑功能
+        
+    def regenerate_features(self, character_id, prompt, keep_features=None):
+        """重新生成特征
+        
+        Args:
+            character_id: 角色ID
+            prompt: 生成提示
+            keep_features: 保留的特征列表，可选
+            
+        Returns:
+            Dict: 更新后的角色信息
+        """
+        # 实现特征重新生成功能
 ```
 
 ### 肖像生成模块
